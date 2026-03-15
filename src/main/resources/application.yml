@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: student-api
+
+  r2dbc:
+    url: r2dbc:h2:mem:///studentdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+
+  sql:
+    init:
+      mode: always       # ejecuta schema.sql al arrancar
+
+logging:
+  level:
+    root: INFO
+    com.digitalfactory.studentapi: DEBUG
+    io.r2dbc: DEBUG
+
+server:
+  port: 8080
