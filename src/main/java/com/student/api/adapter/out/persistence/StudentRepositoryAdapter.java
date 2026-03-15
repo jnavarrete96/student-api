@@ -23,7 +23,9 @@ public class StudentRepositoryAdapter implements StudentRepositoryPort {
 
     @Override
     public Mono<Student> save(Student student) {
-        return r2dbcRepository.save(toEntity(student))
+        StudentEntity entity = toEntity(student);
+        entity.setNew(true);
+        return r2dbcRepository.save(entity)
                 .map(this::toDomain);
     }
 
