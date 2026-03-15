@@ -25,9 +25,16 @@ public class StudentController {
     }
 
     @GetMapping("/active")
-    public Flux<StudentResponse> getActiveStudents() {
+    public Mono<ApiResponse<StudentResponse>> getActiveStudents() {
         log.debug("GET /api/students/active - fetching active students");
         return studentUseCase.getActiveStudents()
-                .map(StudentResponse::fromDomain);
+                .map(StudentResponse::fromDomain)
+                .collectList()
+                .map(students -> ApiResponse.ok(
+                        students,
+                        students.isEmpty()
+                                ? "No active students found"
+                                : "Active students retrieved successfully"
+                ));
     }
 }
